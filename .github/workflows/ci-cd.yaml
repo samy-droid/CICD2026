@@ -11,6 +11,8 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -55,6 +57,7 @@ jobs:
       - name: Configure kubeconfig
         run: |
           echo "${{ secrets.KUBECONFIG_CONTENT }}" > kubeconfig
+          chmod 600 kubeconfig
           export KUBECONFIG=$PWD/kubeconfig
           echo "KUBECONFIG=$PWD/kubeconfig" >> $GITHUB_ENV
 

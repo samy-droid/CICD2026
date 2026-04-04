@@ -3,7 +3,7 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 COPY app/package*.json ./app/
-RUN npm install --only=production --prefix app
+RUN npm install --omit=dev --prefix app
 
 COPY app/ ./app/
 
