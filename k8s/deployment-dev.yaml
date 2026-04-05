@@ -56,7 +56,7 @@ metadata:
 spec:
   rules:
 # ajouter dans le /etc/host
-# 192.168.21.100  hello.cluster.local
+# 192.168.21.100 hello.cluster.local
     - host: hello.cluster.local
       http:
         paths:
