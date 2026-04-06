@@ -62,6 +62,7 @@ Avant de commencer, tu dois avoir :
 - Un **compte Docker Hub**.
 - L’accès à la **VM control-plane** du cluster k3s (avec VS Code).
 - Un **kubeconfig** fourni par ton enseignant (sous forme de texte) qui permet au pipeline de déployer sur le cluster.
+- Avoir lu : 
 
 ---
 
@@ -75,7 +76,9 @@ Avant de commencer, tu dois avoir :
    code
    ````
 
-### 3.2. Création du kubeconfig afin de permette une communication sécurisé entre notre cluster et gitHub. Nous allons créer :
+### 3.2. Création du kubeconfig afin de permette une communication sécurisé entre notre cluster et gitHub. 
+- voir : [Voir la documentation kubeconfig](kubeconfig.md)
+
 
 
 ### 3.3. Dans VS Code,
@@ -421,7 +424,7 @@ jobs:
 
 ---
 
-## 10. Étapes du labo – Ce que tu dois faire
+## 10. Étapes du labo – Ce que vous devez faire
 
 ### Étape 1 – Vérifier que tout est en place
 
