@@ -78,7 +78,7 @@ Récupérer :
 
 # 6️. Construction du kubeconfig final
 
-Créer un fichier `kubeconfig-etudiant.yaml` :
+Créer un fichier `kubeconfig.yaml` :
 
 ```yaml
 apiVersion: v1
@@ -87,7 +87,7 @@ kind: Config
 clusters:
 - name: k3s-cluster
   cluster:
-    server: https://<IP_DU_CONTROL_PLANE>:6443 #pour le moment mettre 192.168.21.200
+    server: https://<IP_DU_CONTROL_PLANE>:6443 #pour le moment mettre 192.168.21.100 qui est l'adresse du control-plan
     certificate-authority-data: <CA_BASE64>
 
 users:
@@ -112,7 +112,7 @@ Ce fichier sera **identique pour tous les étudiants** et peut être utilisé da
 # 7️. Test du kubeconfig
 
 ```bash
-export KUBECONFIG=./kubeconfig-etudiant.yaml
+export KUBECONFIG=./kubeconfig.yaml
 kubectl get pods -n dev
 ```
 
