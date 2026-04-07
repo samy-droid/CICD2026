@@ -14,6 +14,8 @@ Mettre en place un pipeline CI/CD complet qui :
 Dans ce labo, tu vas :
 
 - Travailler avec un **cluster k3s** déjà préparé par ton enseignant.
+- Utiliser les 3 VM dans les modèles de VM dans 420-4T4/K3S
+- Avoir une autre VM PFSense qui utilise l'adresse IP réseau 192.168.21.0
 - Utiliser **GitHub** pour héberger ton code et déclencher le pipeline.
 - Utiliser **Docker Hub** pour stocker les images Docker.
 - Utiliser **GitHub Actions** pour automatiser build + push + déploiement.
@@ -84,7 +86,7 @@ Avant de commencer, tu dois avoir :
 ### 3.3. Dans VS Code,
    - Aller vous positionner dans projet (Ctrl-K ctrl-O)
    - Faire menu view et terminal pour afficher un terminal
-   - Dans le terminal positionnz-vous dans /home/etudiant/Documents/project/ (cd /home/etudiant/Documents/project/)
+   - Dans le terminal positionnez-vous dans /home/etudiant/Documents/project/ (cd /home/etudiant/Documents/project/)
 
 ### 3.4. Fork du dépôt
 1. Sur ce repo Git, clique sur **Fork** (en haut à droite).
@@ -97,7 +99,7 @@ Avant de commencer, tu dois avoir :
 <br><br>
 Tu as maintenant ton propre dépôt avec le code du labo.
 
-### 3.5. Cloner ton fork sur la VM
+### 3.5. Clôner ton fork sur la VM
 
 Sur la VM (dans VS Code ou terminal) tu vas téléchager de ton git le projet en local sur la vm dans le répertoire project.
 
@@ -307,7 +309,7 @@ Les secrets permettent de stocker des informations sensibles (mots de passe, tok
 
 1. Connecte-toi à **Docker Hub**.
 2. Va dans **Account Settings ** dans le coin droit sur l'avatar de ton compte.
-3. Aller sur Personal acces tokents dans le menu et cliquez sur Generate new token.
+3. Aller sur Personal access tokens dans le menu et cliquez sur Generate new token.
 4. Entrer un les informations demandées comme ceci :
 <br><br>
 <img width="664" height="401" alt="image" src="https://github.com/user-attachments/assets/2839f9e6-1a6f-46c5-bc0b-c85213f37f66" />
@@ -415,11 +417,11 @@ jobs:
 
 1. Récupère le code (`checkout`).
 2. Se connecte à Docker Hub.
-3. Choisit un tag d’image selon la branche (`dev`, `qa`, `prod`).
-4. Construit et pousse l’image Docker vers Docker Hub.
+3. Choisis un tag d’image selon la branche (`dev`, `qa`, `prod`).
+4. Construis et pousse l’image Docker vers Docker Hub.
 5. Installe `kubectl`.
 6. Configure l’accès au cluster avec le kubeconfig.
-7. Met à jour le manifest Kubernetes avec le bon nom d’image.
+7. Mets à jour le manifest Kubernetes avec le bon nom d’image.
 8. Applique le manifest dans le bon namespace.
 
 ---
@@ -435,7 +437,7 @@ jobs:
 ---
 - Faire un test
 - Faire un déploiement initial sur K3S sur les 3 namespace
-- Faite un nouvelle version du fichier deploiyement.yaml et changer la variable DOCKER_HUB_USERNAME pour la valeur.
+- Faite une nouvelle version du fichier deploiyement.yaml et changer la variable DOCKER_HUB_USERNAME pour la valeur.
 
 ---
 #### 1.1 Création d’un runner self‑hosted GitHub Actions
@@ -459,7 +461,7 @@ GitHub affichera ensuite une série de commandes à exécuter sur ta vm RunnerGi
 Suis exactement les commandes affichées dans l’interface GitHub, par exemple :
 
 ** à la commande :  ./config.sh --url https://github.com/danbran99/CICD2026 --token AM3ASTNJXWZT4LOWxxxxxxxxxxxxxx
-- Fait que des retours chariots pour avoir les valeurs par défauts.
+- Fais que des retours chariot pour avoir les valeurs par défauts.
 
 ### Étape 2 – Modifier le message de l’application
 
