@@ -205,10 +205,6 @@ git push origin dev
 
 ---
 
-# 🧠 Résumé visuel du flux Git
-
-
-
 # 🧠 Conclusion
 
 Pour réussir ce laboratoire CI/CD, retiens ceci :
