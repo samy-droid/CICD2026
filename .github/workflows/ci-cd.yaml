@@ -63,19 +63,12 @@ jobs:
       #   qa   -> tag qa   -> namespace qa
       #   main -> tag prod -> namespace prod
       # ------------------------------------------------------------
+         
       - name: Set image tag based on branch
         id: vars
         run: |
-          if [ "${GITHUB_REF_NAME}" = "dev" ]; then
-            echo "TAG=dev" >> $GITHUB_OUTPUT
-            echo "K8S_ENV=dev" >> $GITHUB_OUTPUT
-          elif [ "${GITHUB_REF_NAME}" = "qa" ]; then
-            echo "TAG=qa" >> $GITHUB_OUTPUT
-            echo "K8S_ENV=qa" >> $GITHUB_OUTPUT
-          else
-            echo "TAG=prod" >> $GITHUB_OUTPUT
-            echo "K8S_ENV=prod" >> $GITHUB_OUTPUT
-          fi
+          echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+          echo "K8S_ENV=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
 
       # ------------------------------------------------------------
       # Étape 5 : Construire et pousser l'image Docker
@@ -113,7 +106,7 @@ jobs:
       #    echo "KUBECONFIG=$PWD/kubeconfig" >> $GITHUB_ENV
 
       # ------------------------------------------------------------
-      # Étape 8 : Mettre à jour le manifest Kubernetes
+      # Étape 7 : Mettre à jour le manifest Kubernetes
       # Remplace DOCKER_HUB_USERNAME/hello-app:TAG
       # par le vrai nom d'image + tag (ex: danny/hello-app:dev)
       #
@@ -121,9 +114,17 @@ jobs:
       # ------------------------------------------------------------
       - name: Update image in manifest
         run: |
-          sed -i "s|DOCKER_HUB_USERNAME/hello-app:${{ steps.vars.outputs.TAG }}|${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }}|g" k8s/deployment.yaml
+          sed -i "s|image:.*hello-app.*|image: ${IMAGE_NAME}:${{ steps.vars.outputs.TAG }}|g" k8s/deployment.yaml
+ #         sed -i "s|DOCKER_HUB_USERNAME/hello-app:${{ steps.vars.outputs.TAG }}|${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }}|g" k8s/deployment.yaml
  #         sed -i "s|DOCKER_HUB_USERNAME/hello-app:${{ steps.vars.outputs.TAG }}|${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }}|g" k8s/deployment-${{ steps.vars.outputs.K8S_ENV }}.yaml
-
+      
+      # ------------------------------------------------------------
+      # Étape 8 : Force rollout annotation
+      # Force un nouveau déploiement même si le manifest n’a pas changé
+      # ------------------------------------------------------------ 
+      - name: Force rollout annotation
+        run: |
+          kubectl annotate deployment hello-app kubernetes.io/change-cause="$(date)" --overwrite -n ${{ steps.vars.outputs.K8S_ENV }}
       # ------------------------------------------------------------
       # Étape 9 : Déployer dans Kubernetes
       # kubectl apply met à jour ou crée les ressources
@@ -131,3 +132,10 @@ jobs:
       - name: Apply Kubernetes manifests
         run: |
           kubectl apply -f k8s/deployment.yaml -n ${{ steps.vars.outputs.K8S_ENV }}
+      # ------------------------------------------------------------
+      # Étape 10 : Vérifier le rollout
+      # Attend que le déploiement soit terminé et confirme que tout fonctionne
+      # ------------------------------------------------------------ 
+      - name: Verify rollout
+        run: |
+          kubectl rollout status deployment/hello-app -n ${{ steps.vars.outputs.K8S_ENV }}
