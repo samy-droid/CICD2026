@@ -81,7 +81,7 @@ Avant de commencer, tu dois avoir :
    - Aller vous positionner dans projet (Ctrl-K ctrl-O)
    - Faire menu view et terminal pour afficher un terminal
    - Dans le terminal positionnez-vous dans /home/etudiant/Documents/project/ 
-   -- (cd /home/etudiant/Documents/project/)
+   - cd /home/etudiant/Documents/project
 
 ### 3.3. Fork du dépôt
 1. Sur ce repo Git, clique sur **Fork** (en haut à droite).
