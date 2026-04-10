@@ -133,7 +133,7 @@ jobs:
         run: |
           kubectl apply -f k8s/deployment.yaml -n ${{ steps.vars.outputs.K8S_ENV }} || true
       # ------------------------------------------------------------
-      # Étape 10 : Vérifier le rollout
+      # Étape 10 : Vérifier le rollout 
       # Attend que le déploiement soit terminé et confirme que tout fonctionne
       # ------------------------------------------------------------ 
       - name: Verify rollout
