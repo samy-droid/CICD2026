@@ -9,7 +9,7 @@ name: CI/CD k3s + Docker Hub
 # ------------------------------------------------------------
 on:
   push:
-    branches: [ "dev", "qa", "main" ]
+    branches: [ "dev", "ga", "main", "prepod" ]
 
 # ------------------------------------------------------------
 # Variables d'environnement globales
